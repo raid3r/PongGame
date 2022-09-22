@@ -6,6 +6,9 @@ const int FIELD_WIDTH = 30;
 const int FIELD_HEIGHT = 20;
 const int PLATFORM_HEIGHT = 4;
 
+/// <summary>
+/// Ball structure
+/// </summary>
 struct Ball {
 	float X;
 	float Y;
