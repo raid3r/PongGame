@@ -70,7 +70,7 @@ void clearBall(Ball& ball) {
 }
 
 float getRandomFloat(float from, int deltaPercent) {
-	return from + (rand() % deltaPercent) / 100;
+	return from + (rand() % deltaPercent) / 100.0;
 }
 
 void moveBall(Ball& ball, const COORD &platform) {
@@ -112,38 +112,18 @@ void moveBall(Ball& ball, const COORD &platform) {
 		if ((short)newBall.Y >= platform.Y && (short)newBall.Y <= platform.Y + PLATFORM_HEIGHT) {
 			newBall.X = ball.X; 
 			newBall.Y = ball.Y;
+
+			newBall.shiftX = getRandomFloat(1, 150) * (newBall.shiftX < 0? -1:1);
+			newBall.shiftY = getRandomFloat(0.5, 200) * (newBall.shiftY < 0 ? -1 : 1);
 			newBall.shiftX *= -1;
-			newBall.shiftY *= -1;
-
-			newBall.shiftX += getRandomFloat(-1.2, 120);
-			newBall.shiftY += getRandomFloat(-1.2, 120);
-			if (newBall.shiftX > 0 && newBall.shiftX < 0.4) {
-				newBall.shiftX += getRandomFloat(0.8, 30);
-			}
-
-			if (newBall.shiftY > 0 && newBall.shiftY < 0.4) {
-				newBall.shiftY += getRandomFloat(0.8, 30);
-			}
-		
 		}
 	}
 
 	//Fix 2X speed
+
 	while (newBall.shiftX > 1)
 	{
-		newBall.shiftX -= 0.05;
-	}
-	while (newBall.shiftX < -1)
-	{
-		newBall.shiftX += 0.06;
-	}
-	while (newBall.shiftY > 1)
-	{
-		newBall.shiftY -= 0.05;
-	}
-	while (newBall.shiftY < -1)
-	{
-		newBall.shiftY += 0.05;
+		newBall.shiftX -= 0.15;
 	}
 
 	clearBall(ball);
@@ -233,7 +213,7 @@ int main()
 	int key;
 	const int TIME_SHIFT = 10;
 
-	int ballMoveTime = 50;
+	int ballMoveTime = 40;
 	int currentTime = 0;
 
 	COORD platform{ 3, 5 };
@@ -250,7 +230,11 @@ int main()
 		SetCursorPosition(50, 4);
 		cout << "Y  = " << ball.X;
 		SetCursorPosition(50, 5);
+		cout << "dX =                ";
+		SetCursorPosition(50, 5);
 		cout << "dX = " << ball.shiftX;
+		SetCursorPosition(50, 6);
+		cout << "dY =                ";
 		SetCursorPosition(50, 6);
 		cout << "dY = " << ball.shiftY;
 
